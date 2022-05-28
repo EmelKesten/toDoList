@@ -1,2 +1,0 @@
-- This is one of my procjects
-- I did it in the second half of may 2022

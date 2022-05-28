@@ -1,8 +1,49 @@
 const div = document.querySelector(".div");
 const input = document.getElementById("myInput");
 const toDoList = JSON.parse(localStorage.getItem("toDoList")) || [];
+const completeBtn = document.getElementById("completed");
+const inProgressBtn = document.getElementById("inProgress");
 
 let index = localStorage.getItem("index") || 0;
+
+completeBtn.addEventListener("click", () => {
+  if(completeBtn.checked){
+  div.innerHTML = "";
+  toDoList.forEach((item, i) => {
+    if (item.done) {
+      div.innerHTML += `<li class="list-group-item list-group-item-success">${item.text}</li>`;
+    }
+  }
+  );
+}
+ else{
+  div.innerHTML = "";
+   toDoList.forEach((item, i) => {
+     buildHtml(item);
+ })
+}
+}
+);
+inProgressBtn.addEventListener("click", () => {
+  if(inProgressBtn.checked){
+  div.innerHTML = "";
+  toDoList.forEach((item, i) => {
+    if (!item.done) {
+      div.innerHTML += `<li class="list-group-item list-group-item-success">${item.text}</li>`;
+    }
+  }
+  );
+}
+  else{
+  div.innerHTML = "";
+    toDoList.forEach((item, i) => {
+      buildHtml(item);
+  }
+  );
+}
+}
+);
+
 
 function buildHtml(item) {
   const { index, text, done } = item || {};

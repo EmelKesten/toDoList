@@ -10,18 +10,24 @@ function buildHtml(item) {
   miniDiv.className = "miniDiv";
   const p = document.createElement("p");
   const checkbox = document.createElement("input");
+  const deleteBtn = document.createElement("button");
+  deleteBtn.innerHTML = "Delete";
+  deleteBtn.value = index;
   checkbox.type = "checkbox";
   checkbox.classList.add("checkbox");
   checkbox.value = index;
   checkbox.addEventListener("click", (e) => {
     isChecked(e);
   });
+  deleteBtn.addEventListener("click", (e) => {
+    deleteToDo(e);
+  })
   p.innerHTML = text;
   if (done) {
     miniDiv.classList.add("done");
     checkbox.checked = true;
   }
-  miniDiv.append(checkbox, p);
+  miniDiv.append(checkbox, p, deleteBtn);
   div.appendChild(miniDiv);
 }
 
@@ -70,4 +76,17 @@ function isChecked(e) {
   } else {
     e.target.parentElement.classList.remove("done");
   }
+}
+
+function deleteToDo(e) {
+  const index = e.target.value;
+  const item = toDoList.find((item) => {
+    return item.index == index;
+  });
+  toDoList.splice(toDoList.indexOf(item), 1);
+  localStorage.setItem("toDoList", JSON.stringify(toDoList));
+  div.innerHTML = "";
+  toDoList.forEach((item) => {
+    buildHtml(item);
+  });
 }

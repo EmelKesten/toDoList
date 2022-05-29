@@ -120,9 +120,9 @@ function isChecked(e) {
 }
 
 function deleteToDo(e) {
-  const index = e.target.value;
+  const i = e.target.value;
   const item = toDoList.find((item) => {
-    return item.index == index;
+    return item.index == i;
   });
   toDoList.splice(toDoList.indexOf(item), 1);
   localStorage.setItem("toDoList", JSON.stringify(toDoList));
@@ -130,4 +130,8 @@ function deleteToDo(e) {
   toDoList.forEach((item) => {
     buildHtml(item);
   });
+  if(toDoList.length == 0){
+    index = 0;
+    localStorage.setItem("index", index);
+  }
 }

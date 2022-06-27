@@ -49,7 +49,6 @@ function buildHtml(item) {
   const { index, text, done } = item || {};
   const miniDiv = document.createElement("div");
   miniDiv.className = "miniDiv";
-  const p = document.createElement("p");
   const checkbox = document.createElement("input");
   const deleteBtn = document.createElement("button");
   deleteBtn.innerHTML = "Delete";
@@ -63,12 +62,24 @@ function buildHtml(item) {
   deleteBtn.addEventListener("click", (e) => {
     deleteToDo(e);
   })
-  p.innerHTML = text;
   if (done) {
     miniDiv.classList.add("done");
     checkbox.checked = true;
   }
-  miniDiv.append(checkbox, p, deleteBtn);
+  miniDiv.appendChild(checkbox);
+  if(text.startsWith("http")){
+    const p = document.createElement("a");
+    p.href = text;
+    p.innerHTML = text;
+    p.target = "_blank";
+    miniDiv.appendChild(p);
+  }
+  else{
+    const p = document.createElement("p");
+    p.innerHTML = text;
+    miniDiv.appendChild(p);
+  }
+  miniDiv.appendChild(deleteBtn);
   div.appendChild(miniDiv);
 }
 
